@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhD Studies | Vahid Moeinifar - Personal Website</title>
+    
+    <!-- CSS & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    
+    
+</head>
+<body>
+    <nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            Vahid Moeinifar
+        </a>
+        
+<div class="nav-links">
+      <!-- ← Reads from _config.yml -->
+        <a href="/">
+            <i class="fas fa-home"></i> Home
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#about">
+            <i class="fas fa-user"></i> About
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#projects">
+            <i class="fas fa-code"></i> Projects
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#cv">
+            <i class="fas fa-file-alt"></i> Resume
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/phd/">
+            <i class="fas fa-graduation-cap"></i> PhD Studies
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#contact">
+            <i class="fas fa-envelope"></i> Contact
+        </a>
+    
+</div>
+        
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<script>
+// Simple inline theme toggle
+function toggleTheme() {
+    const isLightTheme = document.body.classList.toggle('light-theme');
+    const themeToggle = document.getElementById('themeToggle');
+    
+    if (isLightTheme) {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', 'light');
+        // Update CSS variables (call function from script.js if available)
+        if (typeof updateThemeVariables === 'function') {
+            updateThemeVariables('light');
+        }
+    } else {
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', 'dark');
+        if (typeof updateThemeVariables === 'function') {
+            updateThemeVariables('dark');
+        }
+    }
+}
+
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return;
+    
+    const currentTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    if (currentTheme === 'light' || (!currentTheme && prefersDarkScheme.matches)) {
+        document.body.classList.add('light-theme');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        if (typeof updateThemeVariables === 'function') {
+            updateThemeVariables('light');
+        }
+    }
+    
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+    }
+});
+</script>
+    
+    <main>
+        <section class="hero">
+    <div class="container">
+        <div class="hero-content centered">
+            <div class="hero-text">
+                <h1 class="name">PhD <span class="highlight">Studies</span></h1>
+                <h2 class="title">AGH University of Science and Technology</h2>
+                <p class="description">Research in Group Decision Support Systems with AI and Information Fusion</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Research <span class="highlight">Details</span></h2>
+        
+        <div class="phd-details">
+            <div class="detail-item">
+                <h3><i class="fas fa-university"></i> University</h3>
+                <p><strong>AGH University of Science and Technology</strong></p>
+                <p>Faculty of Electrical Engineering, Automatics, Computer Science and Biomedical Engineering</p>
+            </div>
+            
+            <div class="detail-item">
+                <h3><i class="fas fa-user-tie"></i> Supervisor</h3>
+                <p><strong>prof. dr hab. inż. Andrzej M. Skulimowski</strong></p>
+                <p>Professor, Department of Applied Computer Science</p>
+            </div>
+            
+            <div class="detail-item">
+                <h3><i class="fas fa-book"></i> Disciplines</h3>
+                <div class="tags">
+                    <span class="tag">Automation</span>
+                    <span class="tag">Electronics</span>
+                    <span class="tag">Electrical Engineering</span>
+                    <span class="tag">Space Technologies</span>
+                    <span class="tag">ICT</span>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <h3><i class="fas fa-search"></i> Research Topic</h3>
+                <p><strong>Group decision support systems based on information fusion and related AI methods</strong></p>
+                <p>Developing intelligent systems for collaborative decision-making using AI and data fusion techniques.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+    
+      <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Vahid Moeinifar. All rights reserved.</p>
+            <p>Built with <i class="fas fa-heart"></i> and hosted on GitHub Pages</p>
+            <div class="footer-links">
+                <div class="nav-links">
+      <!-- ← Reads from _config.yml -->
+        <a href="/">
+            <i class="fas fa-home"></i> Home
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#about">
+            <i class="fas fa-user"></i> About
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#projects">
+            <i class="fas fa-code"></i> Projects
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#cv">
+            <i class="fas fa-file-alt"></i> Resume
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/phd/">
+            <i class="fas fa-graduation-cap"></i> PhD Studies
+        </a>
+      <!-- ← Reads from _config.yml -->
+        <a href="/#contact">
+            <i class="fas fa-envelope"></i> Contact
+        </a>
+    
+</div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Load JavaScript at the END -->
+    <script src="/script.js"></script>
+</body>
+</html>

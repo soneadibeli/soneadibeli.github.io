@@ -1,4 +1,43 @@
-title: "My Awesome Site"
-description: "My first Jekyll site on GitHub Pages"
-theme: minima  # Default theme
-url: "https://vahidmoeinifar.github.io"  # Your site URL
+# _config.yml
+
+# Site settings
+title: "Vahid Moeinifar - Personal Website"
+email: "vahidmoeini1988@gmail.com"
+description: "Qt QML Developer | .NET Developer | PhD Candidate at AGH University"
+baseurl: "" # Leave empty if your site is at username.github.io
+url: "https://vahidmoeinifar.github.io" # Replace with your actual GitHub URL
+
+# Your GitHub username
+github_username: "vahidmoeinifar"
+
+# Navigation links
+nav_links:
+  - title: "Home"
+    url: "/"
+    icon: "fas fa-home"
+  - title: "About"
+    url: "/#about"
+    icon: "fas fa-user"
+  - title: "Projects"
+    url: "/#projects"
+    icon: "fas fa-code"
+  - title: "Resume"
+    url: "/#cv"
+    icon: "fas fa-file-alt"
+  - title: "PhD Studies"
+    url: "/phd/"
+    icon: "fas fa-graduation-cap"
+  - title: "Contact"
+    url: "/#contact"
+    icon: "fas fa-envelope"
+
+# Build settings
+markdown: kramdown
+theme: null
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

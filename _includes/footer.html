@@ -1,0 +1,15 @@
+  <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Vahid Moeinifar. All rights reserved.</p>
+            <p>Built with <i class="fas fa-heart"></i> and hosted on GitHub Pages</p>
+            <div class="footer-links">
+                <div class="nav-links">
+    {% for link in site.nav_links %}  <!-- ← Reads from _config.yml -->
+        <a href="{{ link.url | relative_url }}">
+            <i class="{{ link.icon }}"></i> {{ link.title }}
+        </a>
+    {% endfor %}
+</div>
+            </div>
+        </div>
+    </footer>

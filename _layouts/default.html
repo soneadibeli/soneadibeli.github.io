@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | {{ site.title }}</title>
+    
+    <!-- CSS & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+    
+    {% include head.html %}
+</head>
+<body>
+    {% include header.html %}
+    
+    <main>
+        {{ content }}
+    </main>
+    
+    {% include footer.html %}
+    
+    <!-- Load JavaScript at the END -->
+    <script src="{{ '/script.js' | relative_url }}"></script>
+</body>
+</html>

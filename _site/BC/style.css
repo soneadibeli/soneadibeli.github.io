@@ -26,32 +26,6 @@
     --box-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* ===== SOFT LIGHT THEME (alternative) ===== */
-body.light-theme {
-    --bg-primary: #fafafa;            /* Off-white */
-    --bg-secondary: #dadff0;          /* Light gray */
-    --bg-tertiary: #e6e6e6;           /* Medium light gray */
-    
-    --text-primary: #1a1a1a;          /* Near black */
-    --text-secondary: #4a4a4a;        /* Dark gray */
-    --text-muted: #6b7280;            /* Medium gray */
-    
-    --accent-primary: #0056cc;        /* Deep blue */
-    --accent-secondary: #6d28d9;      /* Deep purple */
-    --accent-success: #047857;        /* Forest green */
-    --accent-warning: #b45309;        /* Burnt orange */
-    --accent-danger: #b91c1c;         /* Crimson red */
-    
-    --border-color: #d1d5db;          /* Light gray */
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    
-    --gradient-primary: linear-gradient(135deg, #0056cc, #6d28d9);
-    --gradient-secondary: linear-gradient(135deg, #b45309, #b91c1c);
-    
-    --box-shadow: 0 8px 25px var(--shadow-color);
-    --box-shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.15);
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -77,12 +51,11 @@ body {
 }
 
 .section {
-    padding: 70px 0;
-    
+    padding: 100px 0;
 }
 
 .dark-section {
-        background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+    background-color: var(--bg-secondary);
 }
 
 .section-title {
@@ -111,53 +84,13 @@ body {
     background-clip: text;
 }
 
-/* ===== LAYOUT STYLES ===== */
-/* Active link styling */
-.nav-links a.active {
-    color: var(--accent-primary);
-    font-weight: 600;
-}
-
-.nav-links a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--accent-primary);
-    border-radius: 1px;
-}
-
-/* Update main padding for non-home pages */
-body:not(.home-page) main {
-    padding-top: 100px;
-}
-
-/* Home page specific - remove extra padding */
-.home-page .hero {
-    padding-top: 100px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    .phd-title {
-        font-size: 2.5rem;
-    }
-    
-    .phd-subtitle {
-        font-size: 1.2rem;
-    }
-}
-
 /* ===== NAVBAR ===== */
 .navbar {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: rgba(var(--bg-primary-rgb), 0.85); 
+    background-color: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* Safari support */
     z-index: 1000;
     padding: 20px 0;
     border-bottom: 1px solid var(--border-color);
@@ -1087,8 +1020,6 @@ body:not(.home-page) main {
 /* ===== FOOTER ===== */
 .footer {
     background: var(--bg-primary);
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
-
     padding: 50px 0;
     text-align: center;
     border-top: 1px solid var(--border-color);
@@ -1217,4 +1148,3 @@ body:not(.home-page) main {
         padding: 60px 0;
     }
 }
-
