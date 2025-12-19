@@ -1,129 +1,277 @@
-// Theme toggle functionality
-function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (!themeToggle) return;
+// ============================================
+// WEBSITE INITIALIZATION
+// ============================================
+
+(function() {
+    'use strict';
     
-    // Check for saved theme or prefer-color-scheme
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    const currentTheme = localStorage.getItem('theme');
+    console.log('Initializing website...');
     
-    // Set initial theme
-    if (currentTheme === 'light' || (!currentTheme && prefersDarkScheme.matches)) {
-        document.body.classList.add('light-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        updateThemeVariables('light');
-    } else {
-        document.body.classList.remove('light-theme');
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        updateThemeVariables('dark');
-    }
+    // ============================================
+    // THEME MANAGEMENT
+    // ============================================
     
-    // Toggle theme on button click
-    themeToggle.addEventListener('click', () => {
-        const isLightTheme = document.body.classList.toggle('light-theme');
+    const ThemeManager = {
+        // DARK THEME IS DEFAULT
+        init() {
+            this.themeToggle = document.getElementById('themeToggle');
+            if (!this.themeToggle) {
+                console.warn('Theme toggle button not found');
+                return;
+            }
+            
+            // FORCE DARK THEME ON LOAD (ignore localStorage)
+            this.setTheme('dark');
+            
+            // Add click event
+            this.themeToggle.addEventListener('click', () => this.toggleTheme());
+            
+            console.log('Theme manager initialized');
+        },
         
-        if (isLightTheme) {
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            localStorage.setItem('theme', 'light');
-            updateThemeVariables('light');
-        } else {
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            localStorage.setItem('theme', 'dark');
-            updateThemeVariables('dark');
+        setTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+                this.themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-theme');
+                this.themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        },
+        
+        toggleTheme() {
+            const isLightTheme = document.body.classList.contains('light-theme');
+            this.setTheme(isLightTheme ? 'dark' : 'light');
+        },
+        
+        getCurrentTheme() {
+            return document.body.classList.contains('light-theme') ? 'light' : 'dark';
         }
-    });
-}
-
-// Update CSS variables for theme
-function updateThemeVariables(theme) {
-    if (theme === 'light') {
-        document.documentElement.style.setProperty('--bg-primary', '#f8fafc');
-        document.documentElement.style.setProperty('--bg-secondary', '#f1f5f9');
-        document.documentElement.style.setProperty('--bg-tertiary', '#e2e8f0');
-        document.documentElement.style.setProperty('--text-primary', '#1e293b');
-        document.documentElement.style.setProperty('--text-secondary', '#475569');
-        document.documentElement.style.setProperty('--text-muted', '#64748b');
-        document.documentElement.style.setProperty('--border-color', '#cbd5e1');
-        document.documentElement.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.1)');
-    } else {
-        document.documentElement.style.setProperty('--bg-primary', '#0f172a');
-        document.documentElement.style.setProperty('--bg-secondary', '#1e293b');
-        document.documentElement.style.setProperty('--bg-tertiary', '#334155');
-        document.documentElement.style.setProperty('--text-primary', '#f1f5f9');
-        document.documentElement.style.setProperty('--text-secondary', '#cbd5e1');
-        document.documentElement.style.setProperty('--text-muted', '#94a3b8');
-        document.documentElement.style.setProperty('--border-color', '#475569');
-        document.documentElement.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.3)');
-    }
-}
-
-// Mobile menu toggle
-function initMobileMenu() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.querySelector('.nav-links');
+    };
     
-    if (!menuToggle || !navLinks) return;
+    // ============================================
+    // MOBILE NAVIGATION
+    // ============================================
     
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        menuToggle.innerHTML = navLinks.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
-    });
+    const MobileNavigation = {
+        init() {
+            this.menuToggle = document.getElementById('menuToggle');
+            this.navLinks = document.querySelector('.nav-links');
+            
+            if (!this.menuToggle || !this.navLinks) {
+                console.warn('Mobile navigation elements not found');
+                return;
+            }
+            
+            // Add click event to menu toggle
+            this.menuToggle.addEventListener('click', (e) => this.toggleMenu(e));
+            
+            // Add click events to nav links
+            this.navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => this.closeMenu());
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => this.handleOutsideClick(e));
+            
+            // Close menu on window resize
+            window.addEventListener('resize', () => this.handleResize());
+            
+            console.log('Mobile navigation initialized');
+        },
+        
+        toggleMenu(e) {
+            e.stopPropagation();
+            const isActive = this.navLinks.classList.toggle('active');
+            
+            if (isActive) {
+                this.menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+                document.body.style.overflow = 'hidden';
+            } else {
+                this.menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                document.body.style.overflow = '';
+            }
+        },
+        
+        closeMenu() {
+            this.navLinks.classList.remove('active');
+            this.menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            document.body.style.overflow = '';
+        },
+        
+        handleOutsideClick(e) {
+            if (!this.navLinks.contains(e.target) && 
+                !this.menuToggle.contains(e.target) && 
+                this.navLinks.classList.contains('active')) {
+                this.closeMenu();
+            }
+        },
+        
+        handleResize() {
+            if (window.innerWidth > 768 && this.navLinks.classList.contains('active')) {
+                this.closeMenu();
+            }
+        }
+    };
     
-    // Close mobile menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        });
-    });
-}
-
-// Smooth scrolling for anchor links (home page only)
-function initSmoothScroll() {
-    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+    // ============================================
+    // SMOOTH SCROLLING
+    // ============================================
+    
+    const SmoothScroll = {
+        init() {
+            // Only enable on home page
+            const isHomePage = window.location.pathname === '/' || 
+                              window.location.pathname === '/index.html' ||
+                              window.location.pathname.endsWith('.github.io/');
+            
+            if (!isHomePage) return;
+            
+            // Add click events to anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => this.handleAnchorClick(e));
+            });
+            
+            console.log('Smooth scroll initialized');
+        },
+        
+        handleAnchorClick(e) {
+            const targetId = e.currentTarget.getAttribute('href');
+            if (targetId === '#' || targetId === '#!') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
                 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                // Smooth scroll to target
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL
+                history.pushState(null, null, targetId);
+                
+                // Close mobile menu if open
+                MobileNavigation.closeMenu();
+            }
+        }
+    };
+    
+    // ============================================
+    // NAVBAR SCROLL EFFECTS
+    // ============================================
+    
+    const NavbarEffects = {
+        init() {
+            this.navbar = document.querySelector('.navbar');
+            if (!this.navbar) return;
+            
+            // Initial check
+            this.updateNavbar();
+            
+            // Listen for scroll
+            window.addEventListener('scroll', () => this.updateNavbar());
+            
+            console.log('Navbar effects initialized');
+        },
+        
+        updateNavbar() {
+            if (window.scrollY > 50) {
+                this.navbar.classList.add('scrolled');
+                this.navbar.style.padding = '15px 0';
+                this.navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                this.navbar.classList.remove('scrolled');
+                this.navbar.style.padding = '20px 0';
+                this.navbar.style.boxShadow = 'none';
+            }
+        }
+    };
+    
+    // ============================================
+    // ACTIVE NAV LINK HIGHLIGHTING
+    // ============================================
+    
+    const ActiveLinkManager = {
+        init() {
+            this.updateActiveLink();
+            window.addEventListener('scroll', () => this.updateActiveLink());
+            console.log('Active link manager initialized');
+        },
+        
+        updateActiveLink() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    this.setActiveLink(sectionId);
                 }
             });
-        });
-    }
-}
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initThemeToggle();
-    initMobileMenu();
-    initSmoothScroll();
-    
-    // Add scroll effect to navbar
-    window.addEventListener('scroll', () => {
-        const navbar = document.querySelector('.navbar');
-        if (!navbar) return;
+        },
         
-        if (window.scrollY > 50) {
-            navbar.style.padding = '15px 0';
-            navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.padding = '20px 0';
-            navbar.style.boxShadow = 'none';
+        setActiveLink(sectionId) {
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
         }
+    };
+    
+    // ============================================
+    // INITIALIZE EVERYTHING
+    // ============================================
+    
+    function initializeWebsite() {
+        // Initialize all components
+        ThemeManager.init();
+        MobileNavigation.init();
+        SmoothScroll.init();
+        NavbarEffects.init();
+        ActiveLinkManager.init();
+        
+        console.log('Website initialization complete');
+    }
+    
+    // ============================================
+    // DOM READY & ERROR HANDLING
+    // ============================================
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeWebsite);
+    } else {
+        initializeWebsite();
+    }
+    
+    // Global error handler
+    window.addEventListener('error', function(e) {
+        console.error('Website error:', e.error);
     });
-});
+    
+})();
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initThemeToggle);
-} else {
-    initThemeToggle();
+// ============================================
+// DEBUG UTILITIES (Remove in production)
+// ============================================
+
+function debugWebsite() {
+    console.log('=== WEBSITE DEBUG INFO ===');
+    console.log('Theme:', document.body.classList.contains('light-theme') ? 'Light' : 'Dark');
+    console.log('LocalStorage theme:', localStorage.getItem('theme'));
+    console.log('Mobile menu active:', document.querySelector('.nav-links')?.classList.contains('active'));
+    console.log('Window width:', window.innerWidth);
+    console.log('Scroll position:', window.scrollY);
+    console.log('=======================');
 }
+
+// Uncomment to enable debug mode
+// setInterval(debugWebsite, 5000);

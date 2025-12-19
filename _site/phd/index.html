@@ -2,13 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CRITICAL: Add proper viewport meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>PhD Studies | Vahid Moeinifar - Personal Website</title>
     
     <!-- CSS & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
+    
+    <!-- Emergency mobile fix -->
+    <style>
+        /* Temporary debug border to see viewport */
+        body.debug * { border: 1px solid rgba(255,0,0,0.1); }
+    </style>
     
     
 </head>
@@ -56,58 +64,6 @@
     </div>
 </nav>
 
-<script>
-// Simple inline theme toggle
-function toggleTheme() {
-    const isLightTheme = document.body.classList.toggle('light-theme');
-    const themeToggle = document.getElementById('themeToggle');
-    
-    if (isLightTheme) {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        localStorage.setItem('theme', 'light');
-        // Update CSS variables (call function from script.js if available)
-        if (typeof updateThemeVariables === 'function') {
-            updateThemeVariables('light');
-        }
-    } else {
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        localStorage.setItem('theme', 'dark');
-        if (typeof updateThemeVariables === 'function') {
-            updateThemeVariables('dark');
-        }
-    }
-}
-
-// Initialize theme on page load
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (!themeToggle) return;
-    
-    const currentTheme = localStorage.getItem('theme');
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    if (currentTheme === 'light' || (!currentTheme && prefersDarkScheme.matches)) {
-        document.body.classList.add('light-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        if (typeof updateThemeVariables === 'function') {
-            updateThemeVariables('light');
-        }
-    }
-    
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-    }
-});
-</script>
     
     <main>
         <section class="hero">
@@ -197,7 +153,37 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </footer>
     
-    <!-- Load JavaScript at the END -->
     <script src="/script.js"></script>
+    
+    <!-- Emergency JavaScript to fix mobile -->
+    <script>
+    // Force mobile viewport fix
+    document.addEventListener('DOMContentLoaded', function() {
+        // Prevent horizontal scroll
+        document.body.style.overflowX = 'hidden';
+        
+        // Fix for iOS
+        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+            document.body.style.webkitOverflowScrolling = 'touch';
+        }
+        
+        // Debug: Log viewport info
+        console.log('Viewport width:', window.innerWidth);
+        console.log('Document width:', document.documentElement.clientWidth);
+        console.log('Body width:', document.body.clientWidth);
+        
+        // Add debug class if URL has debug parameter
+        if (window.location.search.includes('debug')) {
+            document.body.classList.add('debug');
+        }
+    });
+    
+    // Prevent zoom on double tap (iOS)
+    document.addEventListener('touchstart', function(event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+    </script>
 </body>
 </html>
