@@ -5,8 +5,7 @@ title: "Sonichukwu Adibeli - Logistics Optimization & AI Researcher"
 email: "sadibeli@agh.edu.pl"
 description: "Doctoral researcher at AGH University of Krakow working on LLM-based logistics optimization and problem structuring."
 baseurl: "" # Leave empty for username.github.io
-# TODO: replace with your own GitHub Pages address, e.g. https://your-username.github.io
-url: "https://YOUR-GITHUB-USERNAME.github.io"
+url: "https://soneadibeli.github.io"
 
 # Author
 author:
@@ -14,6 +13,7 @@ author:
   email: "sadibeli@agh.edu.pl"
 
 # Social
+github_username: soneadibeli
 linkedin_username: sonichukwu-a-86062a16a
 
 # Navigation links (used by both the header and the footer)
