@@ -1,0 +1,15 @@
+<footer class="footer">
+    <div class="container">
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author.name }}. All rights reserved.</p>
+        <p>Hosted on GitHub Pages</p>
+        <div class="footer-links">
+            <div class="nav-links">
+                {% for link in site.nav_links %}
+                <a href="{% if link.external %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>
+                    <i class="{{ link.icon }}"></i> {{ link.title }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</footer>

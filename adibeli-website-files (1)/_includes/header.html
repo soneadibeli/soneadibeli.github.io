@@ -1,0 +1,18 @@
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-links">
+            {% for link in site.nav_links %}
+            <a href="{% if link.external %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>
+                <i class="{{ link.icon }}"></i> {{ link.title }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>

@@ -1,0 +1,56 @@
+# _config.yml
+
+# Site settings
+title: "Sonichukwu Adibeli - Logistics Optimization & AI Researcher"
+email: "sadibeli@agh.edu.pl"
+description: "Doctoral researcher at AGH University of Krakow working on LLM-based logistics optimization and problem structuring."
+baseurl: "" # Leave empty for username.github.io
+# TODO: replace with your own GitHub Pages address, e.g. https://your-username.github.io
+url: "https://YOUR-GITHUB-USERNAME.github.io"
+
+# Author
+author:
+  name: "Sonichukwu Awele Adibeli"
+  email: "sadibeli@agh.edu.pl"
+
+# Social
+linkedin_username: sonichukwu-a-86062a16a
+
+# Navigation links (used by both the header and the footer)
+# Section links start with "/" so they also work from the /research/ page.
+nav_links:
+  - title: "Home"
+    url: "/"
+    icon: "fas fa-home"
+  - title: "About"
+    url: "/#about"
+    icon: "fas fa-user"
+  - title: "Research"
+    url: "/#projects"
+    icon: "fas fa-flask"
+  - title: "Experience"
+    url: "/#experience"
+    icon: "fas fa-briefcase"
+  - title: "Academic Works"
+    url: "/research/"
+    icon: "fas fa-book"
+  - title: "CV"
+    url: "/#cv"
+    icon: "fas fa-file-alt"
+  - title: "Contact"
+    url: "/#contact"
+    icon: "fas fa-envelope"
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+theme: null
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
