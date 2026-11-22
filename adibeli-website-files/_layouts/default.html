@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% assign page_description = page.description | default: site.description | strip_html | escape %}
+    {% if page.title and page.title != "Home" %}{% assign full_title = page.title | append: " | " | append: site.author.name %}{% else %}{% assign full_title = site.title %}{% endif %}
+    <title>{{ full_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    {% if page.keywords %}<meta name="keywords" content="{{ page.keywords | escape }}">{% endif %}
+    <meta name="author" content="{{ site.author.name }}">
+
+    <!-- Open Graph (link previews) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:title" content="{{ full_title | escape }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:image" content="{{ page.og_image | default: '/assets/images/profile.jpg' | absolute_url }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon/favicon.svg' | relative_url }}">
+
+    <!-- Fonts & icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+
+    {% include head.html %}
+</head>
+<body>
+    <!-- Apply the saved light/dark choice before the page paints -->
+    <script>try { if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme'); } catch (e) {}</script>
+
+    {% include header.html %}
+
+    <main>
+        {{ content }}
+    </main>
+
+    {% include footer.html %}
+
+    <script src="{{ '/script.js' | relative_url }}"></script>
+</body>
+</html>

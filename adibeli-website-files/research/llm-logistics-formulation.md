@@ -8,8 +8,8 @@ description: "Summary of the study comparing large language models on formulatin
 published: false
 ---
 
-<section class="section">
-<div class="container" markdown="1">
+<section class="section page-header">
+<div class="container prose" markdown="1">
 
 # LLMs for Logistics Optimization Problem Formulation
 
